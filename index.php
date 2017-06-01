@@ -7,17 +7,13 @@
 <title>Algoritmo de Escalonamento</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body style="padding-top: 10px;">
+<body style="padding-top: 10px; font-family:verdana,arial">
 	<header>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="jumbotron">
-						<center>
-							<h1>Algoritmo de Escalonamento</h1>
-							<p>Desenvolvido por Alan Possamai e Eduardo Schenato dos Santos,
-								para a disciplina de Sistemas Operacionais</p>
-						</center>
+						<h2 style="text-align: center;">Escalonador de Processos</h2>
 					</div>
 				</div>
 			</div>
@@ -27,8 +23,7 @@
 		<div class="container-fluid">
 			<form action="processar.php" method="post">
 				<div class="row">
-					<div
-						class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+					<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
 						<div class="form-group">
 							<label for="cpu1">Algoritmo</label> <select class="form-control"
 								id="algoritmo" name="algoritmo">
@@ -71,8 +66,10 @@
 					</div>
 				</div>
 				<div id="container_processos">
-					<div class="row row-processo" id="divPaiProcesso1">
+					<div class="row row-processo" id="divProcesso1">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title-div">
+							<hr
+								style="height: 5px; margin-left: 1px; margin-bottom: 8px; background-image: -webkit-linear-gradient(top, rgba(189, 204, 189, .8), rgba(0, 0, 0, 0));" />
 							<p class="lead">Processo 1</p>
 							<hr />
 						</div>
@@ -114,10 +111,26 @@
 								onclick="apagarProcesso()">Apagar</button>
 						</div>
 					</div>
+					<hr
+						style="height: 5px; margin-left: 1px; margin-bottom: 8px; background-image: -webkit-linear-gradient(top, rgba(189, 204, 189, .8), rgba(0, 0, 0, 0));" />
 				</div>
 			</form>
 		</div>
 	</section>
+
+	<footer style="padding: 25px 12px 1px 12px;">
+		<div class="navbar navbar-default ">
+			<div class="container-fluid margin">
+				<p class="navbar-text pull-left">&copy; 2017 - Alan Possamai &amp;
+					Eduardo Schenato, all rights reserved.</p>
+				<a href="https://github.com/eduardoschenato/escalonamento_processos"
+					target="_blank" class="navbar-btn btn pull-right"> <span
+					class="glyphicon glyphicon-star"></span>Acess our github project
+				</a>
+			</div>
+		</div>
+	</footer>
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -129,32 +142,37 @@
             function addProcesso() {
                 contador++;
                 var html = $("#container_processos .row-processo").first().clone();
-                $(html).attr("id", "divPaiProcesso" + contador);
+                $(html).attr("id", "divProcesso" + contador);
               	$(html).find(".lead").text("Processo " + contador);
                 $("#container_processos .row-processo").last().after(html);
-                $("#divPaiProcesso" + contador + " .input-value").val("");
+                $("#divProcesso" + contador + " .input-value").val("");
             }
 
             function apagarProcesso() {
-				if ( $("#container_processos .row-processo").length > 1 ) {
-					$(event.target).parent().parent().remove();
-				} else {
-					console.log($(event.target).parent().parent());
-					$(event.target).parent().parent().find(".input-value").val("");
-				}
+                if (confirm("Apagar processo?")) {
+					if ( $("#container_processos .row-processo").length > 1 ) {
+						$(event.target).parent().parent().remove();
+					} else {
+						console.log($(event.target).parent().parent());
+						$(event.target).parent().parent().find(".input-value").val("");
+					}
+                }
             }
 
             function apagarTodosProcessos() {
-            	contador = 1;
-            	$(".row-processo").each(function(){
-                	if ( $("#container_processos .row-processo").length > 1 ) {
-						$(this).remove();
-                    } else {
-                    	$(this).find(".lead").text("Processo " + contador);
-						$(this).find(".input-value").val("");
-                    }
-                });
+                if (confirm("Apagar todos os processos?")) {
+	            	contador = 1;
+	            	$(".row-processo").each(function(){
+	                	if ( $("#container_processos .row-processo").length > 1 ) {
+							$(this).remove();
+	                    } else {
+	                    	$(this).find(".lead").text("Processo " + contador);
+							$(this).find(".input-value").val("");
+	                    }
+	                });
+                }
             }
         </script>
+
 </body>
 </html>
