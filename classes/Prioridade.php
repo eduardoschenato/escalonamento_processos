@@ -1,6 +1,6 @@
 <?php
 
-final class Prioridade extends Algoritmo {
+final class SJF extends Algoritmo {
 
     public function __construct() {
         parent::__construct();
@@ -18,7 +18,7 @@ final class Prioridade extends Algoritmo {
         });
 
         foreach ($processos as $processo) {
-            $this->filaCpu->adicionar($processo);
+            $this->filaCpu->add($processo);
         }
     }
 

@@ -4,7 +4,7 @@ final class Fila {
 
     private $data;
 
-    public function __construct($data = array()) {
+    public function __construct($data) {
         $this->data = $data;
     }
 
@@ -33,7 +33,7 @@ final class Fila {
     }
     
     public function vazio(){
-        return empty($this->data);
+        return empty($data);
     }
 
 }

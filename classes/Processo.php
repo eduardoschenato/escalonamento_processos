@@ -2,13 +2,13 @@
 
 final class Processo {
 
-    public $name;
-    public $cpu1;
-    public $es1;
-    public $cpu2;
-    public $es2;
-    public $prioridade;
-    public $status;
+    private $name;
+    private $cpu1;
+    private $es1;
+    private $cpu2;
+    private $es2;
+    private $prioridade;
+    private $status;
 
     public function __construct($name, $cpu1, $es1, $cpu2, $es2, $prioridade = null) {
         $this->name = $name;

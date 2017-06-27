@@ -18,7 +18,7 @@ final class SJF extends Algoritmo {
         });
 
         foreach ($processos as $processo) {
-            $this->filaCpu->adicionar($processo);
+            $this->filaCpu->add($processo);
         }
     }
 
