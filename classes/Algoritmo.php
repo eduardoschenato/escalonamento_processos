@@ -49,10 +49,13 @@ abstract class Algoritmo {
     public function executar(array $processos) {
         $finish = false;
         $time = 0;
+        $moverParaES = false;
+        $moverParaCPU = false;
+        $moverFinalizar = false;
         
         $this->inicializarFilas($processos);
-
-        while (!$finish) {
+        
+        while (!$finish && $time < 40) {
             if (!$this->filaCpu->vazio()) {
                 $cpu = $this->filaCpu->getPrimeiro();
                 $this->cpu[$time] = $cpu->name;
@@ -61,20 +64,22 @@ abstract class Algoritmo {
                     $cpu->cpu1--;
 
                     if ($cpu->getCpu1() == 0) {
-                        $cpu->setStatus("es1");
-                        $this->moverProcessoParaEs();
-                    } else {
-                        $this->filaCpu->setPrimeiro($cpu);
-                    }
+                    	$cpu->setStatus("es1");
+                    	$moverParaES = true;
+                    } 
+                        
+                    $this->filaCpu->setPrimeiro($cpu);
+                    
                 } elseif ($cpu->getStatus() == "cpu2") {
                     $cpu->cpu2--;
 
-                    if ($cpu->getCpu1() == 0) {
-                        $cpu->setStatus("es2");
-                        $this->moverProcessoParaEs();
-                    } else {
-                        $this->filaCpu->setPrimeiro($cpu);
-                    }
+                    if ($cpu->getCpu2() == 0) {
+                    	$cpu->setStatus("es2");
+                    	$moverParaES = true;
+                    } 
+                        
+                    $this->filaCpu->setPrimeiro($cpu);
+                    
                 }
             }
 
@@ -86,21 +91,38 @@ abstract class Algoritmo {
                     $es->es1--;
 
                     if ($es->getEs1() == 0) {
-                        $es->setStatus("cpu2");
-                        $this->moverProcessoParaCpu();
-                    } else {
-                        $this->filaEs->setPrimeiro($es);
-                    }
+                    	$es->setStatus("cpu2");
+                    	$moverParaCPU = true;
+                    } 
+                        
+                    $this->filaEs->setPrimeiro($es);
+                        
                 } elseif ($es->getStatus() == "es2") {
                     $es->es2--;
 
-                    if ($es->getEs1() == 0) {
-                        $es->setStatus("end");
-                        $this->finalizarProcesso();
-                    } else {
-                        $this->filaEs->setPrimeiro($es);
-                    }
+                    if ($es->getEs2() == 0) {
+                    	$es->setStatus("end");
+                    	$moverFinalizar = true;
+                    } 
+                        
+                    $this->filaEs->setPrimeiro($es);
+                    
                 }
+            }
+            
+            if($moverParaES){
+            	$this->moverProcessoParaEs();
+            	$moverParaES = false;
+            }
+            
+            if($moverParaCPU){
+            	$this->moverProcessoParaCpu();
+            	$moverParaCPU = false;
+            }
+            
+            if($moverFinalizar){
+            	$this->finalizarProcesso();
+            	$moverFinalizar= false;
             }
 
             $finish = $this->filaCpu->vazio() && $this->filaEs->vazio();
