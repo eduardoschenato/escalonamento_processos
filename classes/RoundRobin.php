@@ -23,7 +23,7 @@ final class RoundRobin extends Algoritmo {
 
     public function inicializarFilas(array $processos) {
         foreach ($processos as $processo) {
-            $this->filaCpu->add($processo);
+            $this->filaCpu->adicionar($processo);
         }
     }
 
