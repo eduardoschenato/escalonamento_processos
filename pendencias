@@ -1,0 +1,3 @@
+SJF: corrigir mecanismo de ordenação
+Prioridade: acrescentar campo e testar mecanismo
+Round Robin: fazer algoritmo de execução com o quantum

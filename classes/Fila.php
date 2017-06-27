@@ -17,7 +17,7 @@ final class Fila {
     }
 
     public function adicionar($item) {
-        array_unshift($this->data, $item);
+        array_push($this->data, $item);
     }
 
     public function remover() {
