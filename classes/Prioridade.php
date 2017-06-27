@@ -11,6 +11,7 @@ final class Prioridade extends Algoritmo {
     }
 
     public function inicializarFilas(array $processos) {
+        //Ordena pela Prioridade
         usort($processos, function($a, $b) {
             if ($a->getPrioridade() == $b->getPrioridade())
                 return 0;
@@ -18,39 +19,16 @@ final class Prioridade extends Algoritmo {
         });
 
         foreach ($processos as $processo) {
+            //Adiciona na Fila
             $this->filaCpu->adicionar($processo);
         }
     }
 
-    public function moverProcessoParaCpu() {
-        $filaCPU = $this->getFilaCpu();
-        $filaES = $this->getFilaEs();
-        $filaCPU->adicionar($filaES->remover());
-        $this->setFilaCpu($filaCPU);
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    public function moverProcessoParaEs() {
-        $filaCPU = $this->getFilaCpu();
-        $filaES = $this->getFilaEs();
-        $filaES->adicionar($filaCPU->remover());
-        $this->setFilaCpu($filaCPU);
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    public function finalizarProcesso() {
-        $filaES = $this->getFilaEs();
-        $filaES->remover();
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    private function reordenarFilas() {
+    public function reordenarFilas() {
         //Fila CPU
         $filaCPU = $this->getFilaCpu()->getData();
         
+        //Ordena pela Prioridade
         usort($filaCPU, function($a, $b) {
             if ($a->getPrioridade() == $b->getPrioridade())
                 return 0;
@@ -62,6 +40,7 @@ final class Prioridade extends Algoritmo {
         //Fila E/S
         $filaES = $this->getFilaEs()->getData();
         
+        //Ordena pela Prioridade
         usort($filaES, function($a, $b) {
             if ($a->getPrioridade() == $b->getPrioridade())
                 return 0;

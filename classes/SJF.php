@@ -11,6 +11,7 @@ final class SJF extends Algoritmo {
     }
 
     public function inicializarFilas(array $processos) {
+        //Ordena o Array dos Processos pelo menor tamanho da CPU1
         usort($processos, function($a, $b) {
             if ($a->getCpu1() == $b->getCpu1())
                 return 0;
@@ -18,39 +19,16 @@ final class SJF extends Algoritmo {
         });
 
         foreach ($processos as $processo) {
+            //Adiciona na fila
             $this->filaCpu->adicionar($processo);
         }
     }
 
-    public function moverProcessoParaCpu() {
-        $filaCPU = $this->getFilaCpu();
-        $filaES = $this->getFilaEs();
-        $filaCPU->adicionar($filaES->remover());
-        $this->setFilaCpu($filaCPU);
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    public function moverProcessoParaEs() {
-        $filaCPU = $this->getFilaCpu();
-        $filaES = $this->getFilaEs();
-        $filaES->adicionar($filaCPU->remover());
-        $this->setFilaCpu($filaCPU);
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    public function finalizarProcesso() {
-        $filaES = $this->getFilaEs();
-        $filaES->remover();
-        $this->setFilaEs($filaES);
-        $this->reordenarFilas();
-    }
-
-    private function reordenarFilas() {
+    public function reordenarFilas() {
         //Fila CPU
         $filaCPU = $this->getFilaCpu()->getData();
         
+        //Ordena pelo menor tamanho
         usort($filaCPU, function($a, $b) {
             if ($a->getValorProcessamentoAtual() == $b->getValorProcessamentoAtual())
                 return 0;
@@ -62,6 +40,7 @@ final class SJF extends Algoritmo {
         //Fila E/S
         $filaES = $this->getFilaEs()->getData();
         
+        //Ordena pelo menor tamanho
         usort($filaES, function($a, $b) {
             if ($a->getValorProcessamentoAtual() == $b->getValorProcessamentoAtual())
                 return 0;

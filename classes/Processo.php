@@ -76,6 +76,9 @@ final class Processo {
         $this->status = $status;
     }
     
+    /*
+     * Retorna o tamanho do processamento atual, baseado no status
+     */
     public function getValorProcessamentoAtual(){
         switch ($this->getStatus()) {
             case "cpu1":

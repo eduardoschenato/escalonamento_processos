@@ -25,12 +25,19 @@
                     <div class="row">
                         <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
                             <div class="form-group">
-                                <label for="cpu1">Algoritmo</label> <select class="form-control" id="algoritmo" name="algoritmo">
+                                <label for="algoritmo">Algoritmo</label> <select class="form-control" id="algoritmo" name="algoritmo" onchange="verificarExibicaoPrioridade();">
                                     <option value="fcfs">FCFS</option>
                                     <option value="sjf">SJF</option>
                                     <option value="rr">Round Robin</option>
                                     <option value="p">Prioridade</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="row-quantum">
+                        <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                            <div class="form-group">
+                                <label for="quantum">Quantum</label> <input type="number" min="0" class="form-control input-value" name="quantum" placeholder="Digite o Quantum" />
                             </div>
                         </div>
                     </div>
@@ -67,39 +74,42 @@
                     <div id="container_processos">
                         <div class="row row-processo" id="divProcesso1">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title-div">
-                                <hr
-                                    style="height: 5px; margin-left: 1px; margin-bottom: 8px; background-image: -webkit-linear-gradient(top, rgba(189, 204, 189, .8), rgba(0, 0, 0, 0));" />
+                                <hr style="height: 5px; margin-left: 1px; margin-bottom: 8px; background-image: -webkit-linear-gradient(top, rgba(189, 204, 189, .8), rgba(0, 0, 0, 0));" />
                                 <p class="lead">Processo 1</p>
                                 <hr />
                             </div>
-                            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 col-inputs">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-inputs">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                         <div class="form-group">
                                             <label for="cpu1">CPU 1</label> <input type="number" min="0" class="form-control input-value" name="cpu1[]" placeholder="Tempo da CPU 1" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                         <div class="form-group">
                                             <label for="es1">E/S 1</label> <input type="number" min="0" class="form-control input-value" name="es1[]" placeholder="Tempo de E/S 1" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                         <div class="form-group">
                                             <label for="cpu2">CPU 2</label> <input type="number" min="0" class="form-control input-value" name="cpu2[]" placeholder="Tempo da CPU 2" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                                         <div class="form-group">
                                             <label for="es2">E/S 2</label> <input type="number" min="0" class="form-control input-value" name="es2[]" placeholder="Tempo da E/S 2" />
                                         </div>
                                     </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="prioridade">Prioridade</label> <input type="number" min="0" class="form-control input-value input-prioridade" name="prioridade[]" placeholder="Prioridade" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                        <label for="">&nbsp;</label>
+                                        <button type="button" class="btn btn-block btn-danger" onclick="apagarProcesso()">Apagar</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                <label for="">&nbsp;</label>
-                                <button type="button" class="btn btn-block btn-danger"
-                                        onclick="apagarProcesso()">Apagar</button>
                             </div>
                         </div>
                         <hr
@@ -159,6 +169,24 @@
                                                     });
                                                 }
                                             }
+
+                                            function verificarExibicaoPrioridade() {
+                                                if ($("#algoritmo").val() == "p") {
+                                                    $(".input-prioridade").removeAttr("readonly");
+                                                } else {
+                                                    $(".input-prioridade").attr("readonly", true);
+                                                }
+                                                
+                                                if ($("#algoritmo").val() == "rr") {
+                                                    $("#row-quantum").show();
+                                                } else {
+                                                    $("#row-quantum").hide();
+                                                }
+                                            }
+
+                                            $(document).ready(function () {
+                                                verificarExibicaoPrioridade();
+                                            });
         </script>
 
     </body>
