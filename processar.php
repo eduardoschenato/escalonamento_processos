@@ -22,7 +22,7 @@ if (isset($_POST["algoritmo"])) {
             $algoritmo->executar($listaProcessos);
             break;
         case "rr":
-            $algoritmo = new RoundRobin();
+            $algoritmo = new RoundRobin($_POST["quantum"]);
             $algoritmo->executar($listaProcessos);
             break;
         case "p":
